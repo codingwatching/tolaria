@@ -1,27 +1,27 @@
 {
-  "version": "2026.4.30-alpha.18",
+  "version": "2026.4.30-alpha.19",
   "notes": "Alpha build. See https://refactoringhq.github.io/tolaria/ for full release notes.",
-  "pub_date": "2026-04-30T00:08:50Z",
+  "pub_date": "2026-04-30T00:42:50Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cUdCRnB1V29yWFovRU5oWk5MV2lITGRtcEM1a090VlQ4OWlGOXZDS2ZTdU1IbDhCQVdxQ3JmRDFOMTlTaGZnM3VDbDZqd2tjWngySHk1Q2NRbjBUWFE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA3NDY1CWZpbGU6VG9sYXJpYS5hcHAudGFyLmd6Cm5uV0wvY1hvbnViaFZ2QjVaTDBjVENrQWU4Y3FBWTBtNks1NERiQ0dFdUJJa0loTVZIZ1NRWjJXVDMzRWtmS2toYytQVFcyZFFNL201VEpZSFRReUF3PT0K",
-      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_macOS_Silicon.app.tar.gz",
-      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_macOS_Silicon.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cUFtNWVOYVpmTkoxbnh6SndPU05uUEp1NHd0S0FtdGN3OVREcDdGclNvUHBPbC9GeXpXbmlOYmJwODhHTk4rUitCbWt2Y29ySTd3Q041MGRubm15YXdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA5Njg5CWZpbGU6VG9sYXJpYS5hcHAudGFyLmd6CnZRVFlnQjRkUGF6QnllaCsyVzFRQ0p1WmtsWTlWTDJOcEdxL2VSMC8vcEFEaFM0MU5rLzNSSmczTDhrUDJra2N0NlZnc0ZKZ1FDRDZvUW1ZSmxDc0RRPT0K",
+      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_macOS_Silicon.app.tar.gz",
+      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_macOS_Silicon.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cU9UUHN4bHFGbFRIR2xHYVJDZ3FrWFpsODRJVjBkT0FrUFZVYnhpbTNlV2hDZ1JjbFJTSDE5ZHA2QjRCQlRwamNJYlpWK2R0emRXRDJrVXRHdmgwN0EwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA3NDU5CWZpbGU6VG9sYXJpYS5hcHAudGFyLmd6CnFDb3ZFbHdzclJWK0tQUy9HZVJYYUtsUlU4Z2x2Nm92NjgyU3NGRXhWN2pFa0RjdXZIWjdKU2xZS1FxU0hFWmZkd3A0SG9FZ0wxcWJVR0JxeTdncEJnPT0K",
-      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_macOS_Intel.app.tar.gz",
-      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_macOS_Intel.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cVA1WFgzWnpRNnQ5YzZCNTZYSFZvUG96M0s5YjNLT2U2bjNsSEoyeUpweXVGcUhJRVQwNUh4MEhoUnNGWE40bHk3bEFIZmVsbVIvbEd4Lzc2Rlp3UFFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA5NjI4CWZpbGU6VG9sYXJpYS5hcHAudGFyLmd6CnhRTEEvTkdtOWs3N3UrRkR2aWZadkI0Qm9rTkg2eDhQUDJiRGd6ZnI5VGxkT0hIc0JvZmM1YVd5aFRsL0YzdTdNQi9RY3FSWkJtVjU2MGtQVTNaZEFBPT0K",
+      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_macOS_Intel.app.tar.gz",
+      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_macOS_Intel.app.tar.gz"
     },
     "linux-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cUJDSXplaitJdS9iMndNbFVrengxSHRRN3J3QmJRQ2Zxdmlkakk2UVJrVkVXZytWaWNtR3RkazJzc0JHMERFSjdBbHo1R0JRL2N5bDRXcklvcHJxYndzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA3NTkxCWZpbGU6VG9sYXJpYV8yMDI2LjQuMzAtYWxwaGEuMThfYW1kNjQuQXBwSW1hZ2UKWU1aalVpZGxSZmwzNFl0b2tNa1NPbTUyaXc5K2tCOFEyVWg0ZkVmRDZJNDllQXN0a1pjOHQ1ZFFha3ZRVnl4UTAyZm5xVkY2SG53Z2pDU25DMEdoQmc9PQo=",
-      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_amd64.AppImage",
-      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_amd64.AppImage"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cURMaHUvaE1SUXpWT0ErTW5YNVBjRTdKaXNuSGszeENxb0JxN252d3kweTBJMVVMVDVydFZDaURhM2JpbnI4ME1sN29mbjByNFNDSE45Z0o3YUdpSkFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA5NzM0CWZpbGU6VG9sYXJpYV8yMDI2LjQuMzAtYWxwaGEuMTlfYW1kNjQuQXBwSW1hZ2UKQ29wWXBWL3RXb25WTW5DTXFZczltdWcrOHBUclhyNSszaUJZTVdZd0xndHRtV2NLN210alNNZ0RQd0YrSWZnSkVXMTM4cGxxVExmRFFlNDNwQkltQ3c9PQo=",
+      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_amd64.AppImage",
+      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_amd64.AppImage"
     },
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cUNZZzRBYXFwSTVzMnQ1czhmdzZqM1VHVzRJakZuemV0VXNZb2xhbHFEcWNHa3BNWWZZOXZiNHI4T0tNV2Eyamc4NlRmbkdWQWl1d01kSUVWVUpnbkFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA3NzAzCWZpbGU6VG9sYXJpYV8yMDI2LjQuMzAtYWxwaGEuMThfeDY0LXNldHVwLmV4ZQo2eFNmUW9rcDFoL1NNREZiL2VIRjVrZytrZ01JYWJXbUdMemFYa1NPbnBCTGhSeHoyVzNvczhvQWQwOERlS0QrUFBNYXc3d1FxdzQxbEdVQjhRNEpEdz09Cg==",
-      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_x64-setup.exe",
-      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0018/Tolaria_2026.4.30-alpha.18_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSY3I3L2VKNUJ0cUxoWExYdnMzeE5FcGtQcVpBT0RCcjFTR1JGVzRZdlgxYm5zanJxTkFTNmxBTldYcFBtZU1wRE13V0RSNUhwVjJrc21GeTNTMGs2N2NyMzNraEpNVmdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc3NTA5NzQ2CWZpbGU6VG9sYXJpYV8yMDI2LjQuMzAtYWxwaGEuMTlfeDY0LXNldHVwLmV4ZQpZdFJ5TlJ2Qm9HYjF3a09Kek84YXdhNm9aQXdvME1NTEk5SjFCMnJPWVJwaXE3QU5FYkh0TmdCUDRHV1BPUmJkQ3pPMVZBTTdiOWdPb3RVdzVYZENBQT09Cg==",
+      "url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_x64-setup.exe",
+      "download_url": "https://github.com/refactoringhq/tolaria/releases/download/alpha-v2026.4.30-alpha.0019/Tolaria_2026.4.30-alpha.19_x64-setup.exe"
     }
   }
 }
