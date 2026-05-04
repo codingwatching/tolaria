@@ -8,7 +8,7 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 
 - Branch: `codex/mobile`
 - Active phase: Phase 2 - Mobile Shell
-- Active slice: Add mobile editor adapter boundary for TenTap
+- Active slice: Spike TenTap behind `MobileEditorAdapter`
 - Push policy: commit locally; do not push unless explicitly requested
 - Validation target: iPad/iOS simulator first
 
@@ -46,13 +46,15 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 - Added a pure mobile Git remote parser that codifies the auth choice: GitHub remotes use the GitHub OAuth App path, arbitrary Git remotes use the SSH-key path.
 - Added a pure mobile vault configuration model that keeps vault storage app-local, distinguishes local-only vs remote-backed sync, and derives the required Git auth path from the parsed remote.
 - Extracted the mobile editor surface behind `MobileEditorAdapter` with a tested document projection so TenTap can replace the placeholder surface without changing shell navigation.
+- Installed TenTap and Expo-compatible `react-native-webview`, then wired TenTap into `MobileEditorAdapter` with tested HTML generation from the mobile editor document projection.
+- Created [ADR-0110](./adr/0110-tentap-mobile-editor-spike.md) for the TenTap mobile editor spike and its acceptance gates.
 
 ## Next Action
 
 Continue Phase 2 with the next mobile shell slice:
 
 1. Dismiss or suppress Expo Go's first-run tools modal during simulator QA so screenshots capture the app without the overlay.
-2. Install and spike TenTap behind `MobileEditorAdapter`, keeping the adapter contract intact.
+2. Add markdown round-trip/save boundaries for the TenTap editor path while preserving Markdown as canonical storage.
 3. Add the first native storage adapter around the vault config/repository contracts after the editor spike confirms the app shape.
 
 ## Verification Log
@@ -129,6 +131,12 @@ Continue Phase 2 with the next mobile shell slice:
 - `pnpm --filter @tolaria/mobile typecheck` passed after editor adapter extraction.
 - CodeScene after editor adapter extraction: `apps/mobile/src/MobileApp.tsx`, `apps/mobile/src/MobileEditorAdapter.tsx`, `apps/mobile/src/mobileEditorDocument.ts`, and `apps/mobile/src/mobileEditorDocument.test.ts` scored `10`.
 - `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after editor adapter extraction.
+- TenTap package check: `@10play/tentap-editor@1.0.1` requires `react`, `react-native`, and `react-native-webview`; Expo installed `react-native-webview@13.16.0`.
+- `pnpm --filter @tolaria/mobile test -- src/mobileEditorDocument.test.ts` passed after TenTap wiring: 8 files / 28 tests.
+- `pnpm --filter @tolaria/mobile typecheck` passed after TenTap wiring.
+- CodeScene after TenTap wiring: `apps/mobile/src/MobileEditorAdapter.tsx`, `apps/mobile/src/mobileEditorDocument.ts`, `apps/mobile/src/mobileEditorDocument.test.ts`, and `apps/mobile/src/styles/editorStyles.ts` scored `10`.
+- `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after TenTap wiring; iOS bundle size is now about 11 MB and includes TenTap toolbar assets.
+- `pnpm --filter @tolaria/mobile exec expo start --ios --clear` launched on `iPad Pro 13-inch (M4)`; screenshot captured at `/tmp/tolaria-mobile-tentap-ipad.png`. The app rendered with the TenTap-backed editor behind Expo Go's first-run Tools modal and no red runtime error overlay appeared.
 
 ## Risks / Watch Items
 
@@ -136,3 +144,4 @@ Continue Phase 2 with the next mobile shell slice:
 - Shared package extraction must not destabilize active desktop work.
 - Desktop alpha release currently triggers on every push to `main`; this branch is safe, but release path filters should be added before mobile work merges to `main`.
 - Codacy analyzes committed/pushed repository state; local edits still need local lint/test/CodeScene discipline before remote checks exist.
+- TenTap's package graph currently reports a `react-dom` peer warning because its bundled web editor path depends on React DOM 18 while the native app uses React 19; simulator launch and iOS export pass, but this should be tracked during the editor spike.

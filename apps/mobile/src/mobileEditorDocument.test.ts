@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createMobileEditorDocument } from './mobileEditorDocument'
+import { createMobileEditorDocument, createMobileEditorHtml } from './mobileEditorDocument'
 
 describe('mobile editor document', () => {
   it('strips frontmatter and title heading from the displayed editor body', () => {
@@ -61,5 +61,27 @@ describe('mobile editor document', () => {
         text: 'Note list',
       },
     ])
+  })
+
+  it('creates escaped HTML for TenTap initial content', () => {
+    const html = createMobileEditorHtml({
+      title: 'Tolaria <mobile>',
+      blocks: [
+        {
+          id: '0:Use TenTap',
+          kind: 'paragraph',
+          text: 'Use TenTap & keep markdown durable',
+        },
+        {
+          id: '1:- Escape quotes',
+          kind: 'bullet',
+          text: 'Escape "quotes"',
+        },
+      ],
+    })
+
+    expect(html).toBe(
+      '<h1>Tolaria &lt;mobile&gt;</h1><p>Use TenTap &amp; keep markdown durable</p><ul><li>Escape &quot;quotes&quot;</li></ul>',
+    )
   })
 })

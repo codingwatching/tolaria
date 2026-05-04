@@ -1,25 +1,34 @@
 import { useMemo } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, Text, View } from 'react-native'
+import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor'
 import type { MobileNote } from './mobileNoteProjection'
-import { createMobileEditorDocument } from './mobileEditorDocument'
+import { createMobileEditorDocument, createMobileEditorHtml } from './mobileEditorDocument'
 import { styles } from './styles'
 
 export function MobileEditorAdapter({ note }: { note: MobileNote }) {
   const document = useMemo(() => createMobileEditorDocument(note), [note])
+  const initialContent = useMemo(() => createMobileEditorHtml(document), [document])
+  const editor = useEditorBridge({
+    avoidIosKeyboard: true,
+    initialContent,
+  })
 
   return (
-    <ScrollView contentContainerStyle={styles.editorContent}>
+    <View style={styles.editorAdapterContent}>
       <View style={styles.breadcrumbRow}>
         <Text style={styles.breadcrumbText}>{note.type}</Text>
         <Text style={styles.breadcrumbDivider}>/</Text>
         <Text style={styles.breadcrumbText}>{note.id}</Text>
       </View>
-      <Text style={styles.editorTitle}>{document.title}</Text>
-      {document.blocks.map((block) => (
-        <Text key={block.id} style={block.kind === 'bullet' ? styles.editorBullet : styles.editorParagraph}>
-          {block.text}
-        </Text>
-      ))}
-    </ScrollView>
+      <View style={styles.tentapEditor}>
+        <RichText key={note.id} editor={editor} />
+      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.tentapToolbar}
+      >
+        <Toolbar editor={editor} />
+      </KeyboardAvoidingView>
+    </View>
   )
 }

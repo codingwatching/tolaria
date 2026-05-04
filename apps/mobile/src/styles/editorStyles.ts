@@ -14,6 +14,14 @@ export const editorStyles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     paddingBottom: 96,
   },
+  editorAdapterContent: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 760,
+    alignSelf: 'center',
+    paddingHorizontal: spacing.xl,
+    paddingBottom: 96,
+  },
   breadcrumbRow: {
     marginBottom: spacing.xl,
     flexDirection: 'row',
@@ -46,5 +54,18 @@ export const editorStyles = StyleSheet.create({
     color: colors.text,
     fontSize: 18,
     lineHeight: 28,
+  },
+  tentapEditor: {
+    flex: 1,
+    overflow: 'hidden',
+  },
+  tentapToolbar: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    backgroundColor: colors.canvas,
   },
 })

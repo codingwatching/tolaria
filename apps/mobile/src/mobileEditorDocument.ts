@@ -25,6 +25,10 @@ export function createMobileEditorDocument(input: MobileEditorDocumentInput): Mo
   }
 }
 
+export function createMobileEditorHtml(document: MobileEditorDocument) {
+  return `<h1>${escapeHtml(document.title)}</h1>${document.blocks.map(blockToHtml).join('')}`
+}
+
 function createBlocks(body: string, title: string) {
   return body
     .split('\n')
@@ -50,4 +54,18 @@ function bulletContent(line: string) {
 
 function isTitleHeading(line: string, title: string) {
   return line === `# ${title}`
+}
+
+function blockToHtml(block: MobileEditorBlock) {
+  const text = escapeHtml(block.text)
+  return block.kind === 'bullet' ? `<ul><li>${text}</li></ul>` : `<p>${text}</p>`
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }
