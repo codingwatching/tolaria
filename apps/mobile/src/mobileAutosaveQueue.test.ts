@@ -30,6 +30,7 @@ describe('mobile autosave queue', () => {
 
   it('ignores stale save results when a newer draft was queued', async () => {
     const scheduler = createManualScheduler()
+    const savedMarkdown: string[] = []
     const states: MobileEditorSaveState[] = []
     let resolveFirstSave: () => void = () => {
       throw new Error('First save was not scheduled')
@@ -37,6 +38,7 @@ describe('mobile autosave queue', () => {
     const queue = createMobileAutosaveQueue({
       delayMs: 300,
       scheduler,
+      onSavedDraft: (draft) => savedMarkdown.push(draft.canonicalMarkdown),
       onStateChange: (_noteId, state) => states.push(state),
       saveDraft: (draft) =>
         draftMarkdown(draft).includes('First')
@@ -54,6 +56,7 @@ describe('mobile autosave queue', () => {
     await scheduler.flush()
 
     expect(states.map((state) => state.state)).toEqual(['queued', 'saving', 'queued', 'saving', 'saved'])
+    expect(savedMarkdown).toEqual(['# Workflow\n\nSecond'])
   })
 
   it('can cancel pending draft saves', async () => {

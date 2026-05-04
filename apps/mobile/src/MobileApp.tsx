@@ -25,6 +25,7 @@ import {
   idleMobileEditorSaveState,
   type MobileEditorSaveState,
 } from './mobileEditorSaveState'
+import { applySavedMobileEditorDraft } from './mobileSavedDraftProjection'
 import { MobileEditorAdapter } from './MobileEditorAdapter'
 import {
   createCompactNavigationState,
@@ -56,6 +57,9 @@ export function MobileApp() {
         saveDraft: saveDemoVaultDraft,
         onStateChange: (noteId, saveState) => {
           setSaveStateByNoteId((state) => ({ ...state, [noteId]: saveState }))
+        },
+        onSavedDraft: (draft) => {
+          setAvailableNotes((notes) => applySavedMobileEditorDraft({ draft, notes }))
         },
       }),
     [],

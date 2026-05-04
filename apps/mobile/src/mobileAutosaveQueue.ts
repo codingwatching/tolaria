@@ -20,13 +20,17 @@ export type MobileAutosaveQueue = {
   cancelAll: () => void
 }
 
+export type SavedMobileEditorDraft = Extract<MobileEditorDraft, { persistable: true }>
+
 export function createMobileAutosaveQueue({
   delayMs,
+  onSavedDraft,
   onStateChange,
   saveDraft,
   scheduler = nativeScheduler,
 }: {
   delayMs: number
+  onSavedDraft?: (draft: SavedMobileEditorDraft) => void
   onStateChange: (noteId: string, state: MobileEditorSaveState) => void
   saveDraft: (draft: MobileEditorDraft) => Promise<MobileEditorDraftSaveResult>
   scheduler?: MobileAutosaveScheduler
@@ -43,7 +47,7 @@ export function createMobileAutosaveQueue({
         draft.noteId,
         scheduler.set(() => {
           timerByNoteId.delete(draft.noteId)
-          void saveLatestDraft({ draft, generation, generationByNoteId, onStateChange, saveDraft })
+          void saveLatestDraft({ draft, generation, generationByNoteId, onSavedDraft, onStateChange, saveDraft })
         }, delayMs),
       )
     },
@@ -65,12 +69,14 @@ async function saveLatestDraft({
   draft,
   generation,
   generationByNoteId,
+  onSavedDraft,
   onStateChange,
   saveDraft,
 }: {
   draft: MobileEditorDraft
   generation: number
   generationByNoteId: Map<string, number>
+  onSavedDraft?: (draft: SavedMobileEditorDraft) => void
   onStateChange: (noteId: string, state: MobileEditorSaveState) => void
   saveDraft: (draft: MobileEditorDraft) => Promise<MobileEditorDraftSaveResult>
 }) {
@@ -79,6 +85,9 @@ async function saveLatestDraft({
     const result = await saveDraft(draft)
     if (isLatestGeneration({ draft, generation, generationByNoteId })) {
       onStateChange(draft.noteId, saveResultState(result))
+      if (result.status === 'saved' && draft.persistable) {
+        onSavedDraft?.(draft)
+      }
     }
   } catch {
     if (isLatestGeneration({ draft, generation, generationByNoteId })) {
