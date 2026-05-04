@@ -44,6 +44,8 @@ export function MobileApp() {
   const showsProperties = width >= 1120
   const [availableNotes, setAvailableNotes] = useState(fallbackNotes)
   const [compactNavigation, setCompactNavigation] = useState(() => createCompactNavigationState(fallbackNotes[0].id))
+  const [createNoteFailed, setCreateNoteFailed] = useState(false)
+  const [isCreatingNote, setIsCreatingNote] = useState(false)
   const [saveStateByNoteId, setSaveStateByNoteId] = useState<Record<string, MobileEditorSaveState>>({})
   const selectedNote = useMemo(
     () => availableNotes.find((note) => note.id === compactNavigation.selectedNoteId) ?? availableNotes[0],
@@ -89,6 +91,12 @@ export function MobileApp() {
   }
   const saveDraft = useCallback((draft: MobileEditorDraft) => autosaveQueue.enqueue(draft), [autosaveQueue])
   const createNote = useCallback(() => {
+    if (isCreatingNote) {
+      return
+    }
+
+    setCreateNoteFailed(false)
+    setIsCreatingNote(true)
     void createDemoVaultNote()
       .then((note) => {
         if (!note) {
@@ -98,8 +106,13 @@ export function MobileApp() {
         setAvailableNotes((notes) => [note, ...notes.filter((item) => item.id !== note.id)])
         setCompactNavigation((state) => transitionCompactNavigation(state, { type: 'selectNote', noteId: note.id }))
       })
-      .catch(() => {})
-  }, [])
+      .catch(() => {
+        setCreateNoteFailed(true)
+      })
+      .finally(() => {
+        setIsCreatingNote(false)
+      })
+  }, [isCreatingNote])
 
   return (
     <SafeAreaProvider>
@@ -110,6 +123,8 @@ export function MobileApp() {
             <NoteListPanel
               notes={availableNotes}
               selectedNoteId={compactNavigation.selectedNoteId}
+              createNoteFailed={createNoteFailed}
+              isCreatingNote={isCreatingNote}
               onCreateNote={createNote}
               onSelectNote={selectNote}
             />
@@ -125,6 +140,8 @@ export function MobileApp() {
             selectedNoteId={compactNavigation.selectedNoteId}
             onNavigate={(event) => setCompactNavigation((state) => transitionCompactNavigation(state, event))}
             onDraftChange={saveDraft}
+            createNoteFailed={createNoteFailed}
+            isCreatingNote={isCreatingNote}
             onCreateNote={createNote}
             onSelectNote={selectNote}
           />
@@ -141,6 +158,8 @@ function CompactShell({
   saveState,
   onNavigate,
   onDraftChange,
+  createNoteFailed,
+  isCreatingNote,
   onCreateNote,
   onSelectNote,
   selectedNoteId,
@@ -149,6 +168,8 @@ function CompactShell({
   note: MobileNote
   notes: MobileNote[]
   saveState: MobileEditorSaveState
+  createNoteFailed: boolean
+  isCreatingNote: boolean
   onNavigate: (event: CompactNavigationEvent) => void
   onDraftChange: (draft: MobileEditorDraft) => void
   onCreateNote: () => void
@@ -190,6 +211,8 @@ function CompactShell({
       <NoteListPanel
         notes={notes}
         selectedNoteId={selectedNoteId}
+        createNoteFailed={createNoteFailed}
+        isCreatingNote={isCreatingNote}
         onCreateNote={onCreateNote}
         onOpenSidebar={() => onNavigate({ type: 'openSidebar' })}
         onSelectNote={onSelectNote}
@@ -233,12 +256,16 @@ function SidebarPanel({ onClose }: { onClose?: () => void }) {
 
 function NoteListPanel({
   notes,
+  createNoteFailed,
+  isCreatingNote,
   onCreateNote,
   onOpenSidebar,
   onSelectNote,
   selectedNoteId,
 }: {
   notes: MobileNote[]
+  createNoteFailed: boolean
+  isCreatingNote: boolean
   onCreateNote: () => void
   onOpenSidebar?: () => void
   onSelectNote: (note: MobileNote) => void
@@ -280,7 +307,17 @@ function NoteListPanel({
           </Pressable>
         )}
       />
-      <Pressable onPress={onCreateNote} style={styles.composeButton}>
+      {createNoteFailed ? <Text style={styles.createNoteError}>Could not create note</Text> : null}
+      <Pressable
+        accessibilityLabel="Create note"
+        disabled={isCreatingNote}
+        onPress={onCreateNote}
+        style={({ pressed }) => [
+          styles.composeButton,
+          isCreatingNote ? styles.composeButtonDisabled : null,
+          pressed ? styles.pressed : null,
+        ]}
+      >
         <PencilSimple size={28} color="#ffffff" />
       </Pressable>
     </View>

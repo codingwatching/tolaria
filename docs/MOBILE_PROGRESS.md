@@ -8,7 +8,7 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 
 - Branch: `codex/mobile`
 - Active phase: Phase 2 - Mobile Shell
-- Active slice: Create local mobile note
+- Active slice: Add create-note UX state
 - Push policy: commit locally; do not push unless explicitly requested
 - Validation target: iPad/iOS simulator first
 
@@ -63,6 +63,7 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 - Added a debounced mobile autosave queue that coalesces rapid TenTap draft changes, marks edited drafts as queued, and ignores stale save results when newer drafts supersede them.
 - Refreshed the in-memory mobile note projection after the latest successful editor save so the note list, editor source, properties words, and snippets update from canonical Markdown.
 - Added the first app-local mobile note creation path and wired the compose button to write a new Markdown note, prepend it to the current list, and select it through the shared compact navigation reducer.
+- Added create-note UX state so the compose button disables during app-local creation and displays a compact failure message if storage creation fails.
 
 ## Next Action
 
@@ -70,7 +71,7 @@ Continue Phase 2 with the next mobile shell slice:
 
 1. Dismiss or suppress Expo Go's first-run tools modal during simulator QA so screenshots capture the app without the overlay.
 2. Add a focused simulator interaction path for editor typing/autosave once Expo Go's overlay no longer blocks clean screenshots.
-3. Add a durable note-create UX state: disabled/pressed state while creating, create failure feedback, and eventual title-entry flow.
+3. Add an eventual title-entry flow for new mobile notes instead of creating `Untitled` immediately.
 
 ## Verification Log
 
@@ -209,6 +210,11 @@ Continue Phase 2 with the next mobile shell slice:
 - CodeScene after local note creation: `apps/mobile/src/MobileApp.tsx`, `apps/mobile/src/mobileDemoVault.ts`, and `apps/mobile/src/mobileNoteCreate.test.ts` scored `10`; `apps/mobile/src/mobileNoteCreate.ts` returned no scorable code and no findings.
 - `pnpm --filter @tolaria/mobile test` passed after local note creation: 17 files / 53 tests.
 - `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after local note creation.
+- `pnpm --filter @tolaria/mobile test -- src/mobileNoteCreate.test.ts` passed after create-note UX state: 17 files / 53 tests.
+- `pnpm --filter @tolaria/mobile typecheck` passed after create-note UX state.
+- CodeScene after create-note UX state: `apps/mobile/src/MobileApp.tsx`, `apps/mobile/src/styles/noteListStyles.ts`, and `apps/mobile/src/styles/noteCreateStyles.ts` scored `10`.
+- `pnpm --filter @tolaria/mobile test` passed after create-note UX state: 17 files / 53 tests.
+- `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after create-note UX state.
 
 ## Risks / Watch Items
 
