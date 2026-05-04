@@ -8,7 +8,7 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 
 - Branch: `codex/mobile`
 - Active phase: Phase 2 - Mobile Shell
-- Active slice: Add compact swipe gesture support
+- Active slice: Add mobile Git remote auth strategy parsing
 - Push policy: commit locally; do not push unless explicitly requested
 - Validation target: iPad/iOS simulator first
 
@@ -43,13 +43,14 @@ This file is the resumable working log for Tolaria mobile. The strategy and road
 - Wrapped the mobile root in `GestureHandlerRootView`.
 - Added a tested compact gesture mapper and `SwipeSurface` wrapper so phone panels can transition through swipe gestures while keeping panel behavior in the reducer.
 - Re-tested the iPad simulator path; the app now launches in Expo Go on `iPad Pro 13-inch (M4)`.
+- Added a pure mobile Git remote parser that codifies the auth choice: GitHub remotes use the GitHub OAuth App path, arbitrary Git remotes use the SSH-key path.
 
 ## Next Action
 
 Continue Phase 2 with the next mobile shell slice:
 
 1. Dismiss or suppress Expo Go's first-run tools modal during simulator QA so screenshots capture the app without the overlay.
-2. Add the storage/auth abstraction skeleton behind the mobile vault repository.
+2. Connect parsed Git remotes to a mobile vault configuration model.
 3. Begin the TenTap editor spike behind a `MobileEditorAdapter` once the shell/storage boundary is stable.
 
 ## Verification Log
@@ -114,6 +115,10 @@ Continue Phase 2 with the next mobile shell slice:
 - CodeScene after gesture support: `apps/mobile/src/compactGestures.ts`, `apps/mobile/src/compactGestures.test.ts`, `apps/mobile/src/SwipeSurface.tsx`, touched app/root files, and touched style module scored `10`; `apps/mobile/index.ts` returned no scorable code.
 - `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after adding gesture support.
 - Simulator screenshot after gesture support captured at `/tmp/tolaria-mobile-gestures-ipad.png`; no red runtime error overlay appeared.
+- `pnpm --filter @tolaria/mobile test` passed after Git remote auth parsing: 6 files / 20 tests.
+- `pnpm --filter @tolaria/mobile typecheck` passed after Git remote auth parsing.
+- CodeScene after Git remote auth parsing: `apps/mobile/src/mobileGitRemote.ts` and `apps/mobile/src/mobileGitRemote.test.ts` scored `10`.
+- `pnpm --filter @tolaria/mobile exec expo export --platform ios --output-dir /tmp/tolaria-mobile-export` passed after Git remote auth parsing.
 
 ## Risks / Watch Items
 
