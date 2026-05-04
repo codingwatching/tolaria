@@ -2,11 +2,10 @@ import { useEffect, useMemo, useRef } from 'react'
 import { KeyboardAvoidingView, Platform, Text, View } from 'react-native'
 import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor'
 import type { MobileNote } from './mobileNoteProjection'
+import { createMobileEditorDraft, type MobileEditorDraft } from './mobileEditorDraft'
 import {
   createMobileEditorDocument,
-  createMobileEditorDraft,
   createMobileEditorHtml,
-  type MobileEditorDraft,
 } from './mobileEditorDocument'
 import { styles } from './styles'
 

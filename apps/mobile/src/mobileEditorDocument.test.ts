@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createMobileEditorDocument, createMobileEditorDraft, createMobileEditorHtml } from './mobileEditorDocument'
+import { createMobileEditorDocument, createMobileEditorHtml } from './mobileEditorDocument'
 
 describe('mobile editor document', () => {
   it('strips frontmatter and title heading from the displayed editor body', () => {
@@ -88,22 +88,4 @@ describe('mobile editor document', () => {
     )
   })
 
-  it('keeps TenTap HTML drafts blocked from vault persistence until markdown serialization exists', () => {
-    expect(
-      createMobileEditorDraft({
-        note: {
-          id: 'workflow',
-          title: 'Workflow',
-          content: '# Workflow\n\nOriginal markdown',
-        },
-        editorHtml: '<h1>Workflow</h1><p>Edited content</p>',
-      }),
-    ).toEqual({
-      noteId: 'workflow',
-      sourceMarkdown: '# Workflow\n\nOriginal markdown',
-      editorHtml: '<h1>Workflow</h1><p>Edited content</p>',
-      persistable: false,
-      blockedReason: 'markdownSerializerMissing',
-    })
-  })
 })

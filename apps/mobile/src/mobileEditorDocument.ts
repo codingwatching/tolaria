@@ -17,14 +17,6 @@ export type MobileEditorDocumentInput = {
   content: string
 }
 
-export type MobileEditorDraft = {
-  noteId: string
-  sourceMarkdown: string
-  editorHtml: string
-  persistable: false
-  blockedReason: 'markdownSerializerMissing'
-}
-
 export function createMobileEditorDocument(input: MobileEditorDocumentInput): MobileEditorDocument {
   const [, body] = splitFrontmatter(input.content)
 
@@ -36,22 +28,6 @@ export function createMobileEditorDocument(input: MobileEditorDocumentInput): Mo
 
 export function createMobileEditorHtml(document: MobileEditorDocument) {
   return `<h1>${escapeHtml({ value: document.title })}</h1>${document.blocks.map(blockToHtml).join('')}`
-}
-
-export function createMobileEditorDraft({
-  editorHtml,
-  note,
-}: {
-  editorHtml: string
-  note: MobileEditorDocumentInput
-}): MobileEditorDraft {
-  return {
-    noteId: note.id,
-    sourceMarkdown: note.content,
-    editorHtml,
-    persistable: false,
-    blockedReason: 'markdownSerializerMissing',
-  }
 }
 
 function createBlocks({ body, title }: { body: string; title: string }) {
