@@ -29,6 +29,11 @@ export const propertyChipStyles = StyleSheet.create({
     gap: spacing.sm,
     marginTop: spacing.sm,
   },
+  propertyPickerOptions: {
+    paddingBottom: spacing.md,
+    borderBottomColor: colors.border,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   propertyChip: {
     minHeight: 30,
     justifyContent: 'center',

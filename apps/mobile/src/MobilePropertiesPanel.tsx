@@ -1,17 +1,10 @@
 import { CaretLeft } from 'phosphor-react-native'
-import type { ReactNode } from 'react'
-import { Pressable, ScrollView, Text, View, type StyleProp, type ViewStyle } from 'react-native'
+import { useState } from 'react'
+import { Pressable, ScrollView, Text, View } from 'react-native'
 import type { MobileNote } from './demoData'
-import { NamedIcon, type IconName } from './NamedIcon'
-import {
-  isMobileNotePropertySelected,
-  mobileNoteIconOptions,
-  mobileNoteStatusOptions,
-  mobileNoteTagOptions,
-  mobileNoteTypeOptions,
-  toggleMobileNoteTag,
-  type MobileNotePropertyPatch,
-} from './mobileNoteProperties'
+import { MobileEditablePropertyPickers } from './MobileEditablePropertyPickers'
+import type { MobileNotePropertyPatch } from './mobileNoteProperties'
+import { nextMobilePropertyPicker, type MobilePropertyPickerKey } from './mobilePropertyPicker'
 import { styles } from './styles'
 import { colors } from './theme'
 
@@ -29,32 +22,22 @@ export function MobilePropertiesPanel({
   onClose?: () => void
 }) {
   const today = formatMobilePropertyDate(new Date())
+  const [openPicker, setOpenPicker] = useState<MobilePropertyPickerKey | null>(null)
+  const selectPicker = (selected: MobilePropertyPickerKey) => {
+    setOpenPicker((current) => nextMobilePropertyPicker({ current, selected }))
+  }
 
   return (
     <View style={styles.properties}>
       <PanelToolbar onClose={onClose} />
       <ScrollView contentContainerStyle={styles.propertiesContent}>
         {failed ? <Text style={styles.propertyError}>Could not save property.</Text> : null}
-        <PropertyOptionGroup
+        <MobileEditablePropertyPickers
           disabled={isSaving}
-          label="Type"
-          options={mobileNoteTypeOptions}
-          value={note.type}
-          onSelect={(type) => onChangeProperties?.({ type })}
-        />
-        <PropertyOptionGroup
-          disabled={isSaving}
-          label="Status"
-          options={mobileNoteStatusOptions}
-          value={note.status}
-          onSelect={(status) => onChangeProperties?.({ status })}
-        />
-        <PropertyIconOptionGroup
-          disabled={isSaving}
-          label="Icon"
-          options={mobileNoteIconOptions}
-          value={note.icon}
-          onSelect={(icon) => onChangeProperties?.({ icon })}
+          note={note}
+          openPicker={openPicker}
+          onChangeProperties={onChangeProperties}
+          onSelectPicker={selectPicker}
         />
         <PropertyRow
           actionLabel="Today"
@@ -65,13 +48,6 @@ export function MobilePropertiesPanel({
         />
         <PropertyRow label="Words" value={String(note.words)} />
         <PropertyRow label="Modified" value={note.modified} />
-        <Text style={styles.propertyGroupTitle}>Tags</Text>
-        <PropertyOptionChips
-          disabled={isSaving}
-          options={mobileNoteTagOptions}
-          value={note.tags}
-          onSelect={(tag) => onChangeProperties?.({ tags: toggleMobileNoteTag(note.tags, tag) })}
-        />
         <Text style={styles.propertyGroupTitle}>History</Text>
         <Text style={styles.historyItem}>eb373865c - Updated 1 note</Text>
         <Text style={styles.historyItem}>5e853fdfe - Updated 1 note</Text>
@@ -133,128 +109,5 @@ function PropertyRow({
     </Pressable>
   ) : (
     <View style={styles.propertyRow}>{content}</View>
-  )
-}
-
-function PropertyOptionGroup({
-  disabled,
-  label,
-  onSelect,
-  options,
-  value,
-}: {
-  disabled: boolean
-  label: string
-  onSelect: (option: string) => void
-  options: readonly string[]
-  value: string | undefined
-}) {
-  return (
-    <View style={styles.propertyOptionGroup}>
-      <Text style={styles.propertyLabel}>{label}</Text>
-      <PropertyOptionChips disabled={disabled} options={options} value={value} onSelect={onSelect} />
-    </View>
-  )
-}
-
-function PropertyIconOptionGroup({
-  disabled,
-  label,
-  onSelect,
-  options,
-  value,
-}: {
-  disabled: boolean
-  label: string
-  onSelect: (option: string) => void
-  options: readonly string[]
-  value: string | undefined
-}) {
-  return (
-    <View style={styles.propertyOptionGroup}>
-      <Text style={styles.propertyLabel}>{label}</Text>
-      <View style={styles.propertyChipRow}>
-        {options.map((option) => {
-          const isSelected = isMobileNotePropertySelected({ current: value, option })
-
-          return (
-            <SelectablePropertyChip
-              disabled={disabled}
-              isSelected={isSelected}
-              key={option}
-              onPress={() => onSelect(option)}
-              style={styles.propertyIconChip}
-            >
-              <NamedIcon color={isSelected ? colors.primary : colors.textSoft} name={option as IconName} size={20} />
-            </SelectablePropertyChip>
-          )
-        })}
-      </View>
-    </View>
-  )
-}
-
-function PropertyOptionChips({
-  disabled,
-  onSelect,
-  options,
-  value,
-}: {
-  disabled: boolean
-  onSelect: (option: string) => void
-  options: readonly string[]
-  value: readonly string[] | string | undefined
-}) {
-  return (
-    <View style={styles.propertyChipRow}>
-      {options.map((option) => {
-        const isSelected = Array.isArray(value)
-          ? value.includes(option)
-          : isMobileNotePropertySelected({ current: typeof value === 'string' ? value : undefined, option })
-
-        return (
-          <SelectablePropertyChip
-            disabled={disabled}
-            isSelected={isSelected}
-            key={option || 'none'}
-            onPress={() => onSelect(option)}
-            style={styles.propertyChip}
-          >
-            <Text style={[styles.propertyChipText, isSelected ? styles.propertyChipTextSelected : null]}>
-              {option || 'None'}
-            </Text>
-          </SelectablePropertyChip>
-        )
-      })}
-    </View>
-  )
-}
-
-function SelectablePropertyChip({
-  children,
-  disabled,
-  isSelected,
-  onPress,
-  style,
-}: {
-  children: ReactNode
-  disabled: boolean
-  isSelected: boolean
-  onPress: () => void
-  style: StyleProp<ViewStyle>
-}) {
-  return (
-    <Pressable
-      disabled={disabled}
-      onPress={onPress}
-      style={({ pressed }) => [
-        style,
-        isSelected ? styles.propertyChipSelected : null,
-        disabled ? styles.propertyDisabled : null,
-        pressed ? styles.pressed : null,
-      ]}
-    >
-      {children}
-    </Pressable>
   )
 }
